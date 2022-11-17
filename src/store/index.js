@@ -1,4 +1,5 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
+import axios from 'axios';
 
 export default createStore({
   state: {
@@ -7,14 +8,28 @@ export default createStore({
   getters: {
   },
   mutations: {
-    increaseCounter(state) {
-      state.counter++
+    increaseCounter(state, randomNumber) {
+      state.counter += randomNumber
     },
-    decreaseCounter(state) {
-      state.counter--
+    decreaseCounter(state, randomNumber) {
+      state.counter -= randomNumber
     },
   },
   actions: {
+    increaseCounter({ commit }) {
+      console.log('increaseCounter (action)')
+      axios('https://www.random.org/integers/?num=1&min=1&max=6&col=1&base=10&format=plain&rnd=new')
+      .then(response => {
+        commit('increaseCounter', response.data)
+      })
+    },
+    decreaseCounter({ commit }) {
+      console.log('decreaseCounter (action)')
+      axios('https://www.random.org/integers/?num=1&min=1&max=6&col=1&base=10&format=plain&rnd=new')
+      .then(response => {
+        commit('decreaseCounter', response.data)
+      })
+    },
   },
   modules: {
   }
